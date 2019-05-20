@@ -17,7 +17,7 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 
 # Site Settings
 locale                   : "en-US"
-title                    : "bk dev"
+title                    : "bk Blog"
 title_separator          : "-"
 name                     : "choebk"
 description              : ""
