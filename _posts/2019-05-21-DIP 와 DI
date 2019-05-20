@@ -1,6 +1,7 @@
 ---
 title: "DIP 와 DI"
-categories: oop
+date: 2018-05-21 00:36:00
+categories: oop dip-di
 ---
 # DIP 와 DI
 * Dependency Inversion Principle
