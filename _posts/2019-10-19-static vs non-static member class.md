@@ -48,3 +48,13 @@ categories: java static-member-class non-static-member-class
 * shadowing 예시를 보면 멤버 클래스가 outer class 에 대한 숨은 참조를 가지게 된다. 이 참조를 저장하려면 시간과 공간이 소비된다. 그리고 `가비지 컬렉션이 outer class 의 인스턴스를 수거하지 못하는 메모리 누수가 생길 수 있다는 문제가 있다.`
   
 ## static nested class
+* static nested class 는 outer class 인스턴스 생성 없이 독립적으로 존재할 수 있다. 
+* 대표적인 static nested class 의 예로 Map 과 Entry 의 관계가 있다. Map 인스턴스는 key-value 을 를 직접 관리하지 않고, 키-값 쌍을 표현하는 Entry 를 이용한다. Entry 는 Map 의 인스턴스를 사용해야 하는데, Entry 가 매번 생성될때마다 Map(Outer class) 에 대한 참조를 각각 가지게 된다면 메모리 생성 및 관리에서 비효율적인 것이다. 그래서 Entry 는 static nested class 로 정의되어 있다.
+  ```java
+  public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneable, Serializable {
+    
+      static class Node<K,V> implements Map.Entry<K,V> {
+      
+      }
+  }
+  ```
