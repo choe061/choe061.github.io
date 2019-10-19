@@ -25,23 +25,23 @@ categories: java static-member-class non-static-member-class
   * `Effective Java 에서는 아래 처럼 멤버 클래스에서 바깥 인스턴스에 접근할 일이 없다면 무조건 static 을 붙여서 static nested class 로 만들라고 한다.`
   ```java
   public class ShadowTest {
-    public int x = 0;
+      public int x = 0;
 
-    class FirstLevel {
-        public int x = 1;
+      class FirstLevel {
+          public int x = 1;
 
-        void methodInFirstLevel(int x) {
-            System.out.println("x = " + x);
-            System.out.println("this.x = " + this.x);
-            System.out.println("ShadowTest.this.x = " + ShadowTest.this.x);
-        }
-    }
+          void methodInFirstLevel(int x) {
+              System.out.println("x = " + x);
+              System.out.println("this.x = " + this.x);
+              System.out.println("ShadowTest.this.x = " + ShadowTest.this.x);
+          }
+      }
     
-    public static void main(String... args) {
-        ShadowTest st = new ShadowTest();
-        ShadowTest.FirstLevel fl = st.new FirstLevel();
-        fl.methodInFirstLevel(23);
-    }
+      public static void main(String... args) {
+          ShadowTest st = new ShadowTest();
+          ShadowTest.FirstLevel fl = st.new FirstLevel();
+          fl.methodInFirstLevel(23);
+      }
   }
   ```
 #### inner class 단점 정리
