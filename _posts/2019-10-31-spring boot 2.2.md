@@ -1,0 +1,79 @@
+---
+
+title: "Spring boot 2.2 Release Notes 정리"
+permalink: /spring-boot/2.2
+categories: spring-boot2.2 release-notes
+
+---
+
+## Spring Boot 2.2 Release Notes
+
+#### JUnit 5 가 디폴트
+
+`spring-boot-starter-test` 가 JUnit 5 를 디폴트로 제공한다. JUnit 5 에는 디폴트로 JUnit 4 에 기반한 테스트 클래스를 지원하는 `vintage engine` 이 포함되어 있다. JUnit 4 에서 JUnit 5 로 마이그레이션에 대한 준비를 도와주기 위해서...
+
+#### AssertJ 3.12
+
+#### Spring HATEOAS 1.0
+
+HATEOAS 란?
+
+* [Spring-HATEOAS 특징과 설정 정리](https://otrodevym.tistory.com/entry/Spring-HATEOAS-특징과-설정-정리)
+  * 간단하게 하이퍼 미디어 링크를 이용하는 방식으로, 서버가 클라이언트에게 자원을 전송하면서 다음 작업을 할 수 있는 URL 링크를 함께 전송한다. 클라이언트는 해당 링크를 보고 다음 작업을 수행한다.
+  * 장점
+    * 서버의 URL 이 변경되어도 유연하게 대응할 수 있다.
+    * 클라이언트가 여러 case 에 대해 알지 못해도, 다음 행동을 취할 수 있다.
+
+HATEOAS 정식 M1 release
+
+#### Java 13 Support
+
+#### Lazy initialization
+
+* global 지연 초기화는 startup time 을 줄여준다.
+
+  * `spring.main.lazy-initialization` 속성
+
+* 하지만, 두가지 cost 가 발생함
+
+  * 지연 초기화가 발생하는 동안 HTTP Requests 처리가 더 오래걸릴 것이다.
+  * startup 시점에 발생할 실패들이 더 나중에 발생할 것이다.
+    * **이건 안좋은 것 같은데...**
+
+* `@Lazy(false)` : annotation 처리로 bean 을 개별적으로 lazy initialization 옵션을 off 할 수 있다. @Lazy(false) 할 수 없는 경우가 있는데... LazyInitializationExcludeFilter Bean 을 정의하면 된다. 아래 예는 `IntegrationFlow.class` 타입의 빈에 대해 lazy false 하는 방법
+
+  ```java
+  // static 으로 선언???
+  @Bean
+  static LazyInitializationExcludeFilter integrationLazyInitialization() {
+    return LazyInitializationExcludeFilter.forBeanTypes(IntegrationFlow.class);
+  }
+  ```
+
+#### Spring Data Moore
+
+Declarative, reactive transactions?! 어렵다. 나중에 봐야겠다.
+
+https://spring.io/blog/2019/10/08/what-s-new-in-spring-data-moore
+
+#### integration tests 에서 Test Application Arguments
+
+`SpringBootTest` 는 `ApplicationArguments` bean 의 생성을 trigger 하는 application arguments 를 지정할 수 있다.
+
+#### `@ConfigurationProperties` scanning
+
+`Configuration properties` 를 사용할때 `@EnableConfigurationProperties` or `@Component` 를 사용했는데, 이제는 `@ConfigurationProperties` 를 자동으로 classpath 기반으로 스캐닝하여 찾아준다. `@SpringBootApplication` 이 붙은 클래스의 패키지를 디폴트로 스캐닝한다. 커스텀하려면 `@ConfigurationPropertiesScan` 사용.
+
+#### Immutable `@ConfigurationProperties` binding
+
+@ConfigurationProperties 는 constructor 기반의 바인딩을 제공하여 이 어노테이션이 달린 클래스는 immutable 하다..?
+
+Constructor 기반 바인딩은 클래스 또는 생성자 중 하나에 `@ConstructorBinding` 을 붙여주면 된다.
+
+`@DefaultValue` 와 `@DateTimeFormat` 같은 어노테이션은 생성자 파라미터에 붙여서 사용할 수 있다. 
+
+[* 생성자 바인딩 및 @DefaultValue example](https://docs.spring.io/spring-boot/docs/2.2.0.RELEASE/reference/html/spring-boot-features.html#boot-features-external-config-constructor-binding)
+
+#### RSocket 지원
+
+`spring-boot-starter-rsocket`
