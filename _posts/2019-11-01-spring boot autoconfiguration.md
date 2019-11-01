@@ -59,7 +59,7 @@ public class StudyAutoConfiguration {
 
 
 
-#### 다른 예시
+####   다른 예시
 
 ```java
 @Configuration
