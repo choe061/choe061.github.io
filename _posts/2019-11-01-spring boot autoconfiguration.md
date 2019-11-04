@@ -51,15 +51,72 @@ public class StudyAutoConfiguration {
 }
 ```
 
-#### 2. 환경(or 조건)에 따라 properties 를 다르게 받는 방법
+#### 2. 조건(Condition)에 따라 properties 를 다르게 받는 방법
+
+`@Conditional` 을 사용하여 조건에 따라 Bean 을 등록할 수 있다. @Conditional 의 속성 값으로 `Condition` interface 를 구현한 클래스를 등록해야 한다.
 
 ```java
-
+public class CompanyCondition implements Condition {
+    @Override
+    public boolean matches(ConditionContext context,
+                           AnnotatedTypeMetadata metadata) {
+        // return 값이 true 이면 bean 이 등록된다.
+        return context.getEnvironment()
+            		  .containsProperty("company");
+    }
+}
 ```
 
 
 
-####   다른 예시
+```java
+@Configuration
+@RequiredArgsConstructor
+public class StudyAutoConfiguration {
+    private final CompanyProperties properties;
+    @Bean
+    @Conditional(CompanyCondition.class)
+    public Company company() {
+        return new Company(properties.getName(), properties.getValue());
+    }
+}
+```
+
+#### 3. 환경(profile)에 따라 properties 를 다르게 받는 방법
+
+profile 에 따라 configuration 정보를 다르게 받는 방법도 결국 내부적으로 2번의 방법(Conditional)을 사용하여 구현하고 있다.
+
+```java
+// ...
+@Conditional(ProfileCondition.class)
+public @interface Profile {
+    String[] value();
+}
+```
+
+아래 처럼 `@Profile` 을 이용하여 dev, local 각각 다른 설정이 가능하다.
+
+```java
+@Profile("dev")
+@Configuration
+public class StudyAutoConfiguration {
+    //
+}
+
+@Profile("local")
+@Configuration
+public class StudyAutoConfiguration {
+    //
+}
+```
+
+#### 4. Spring boot 가 자동으로 설정 정보를 가져오는 방법
+
+application.yml, application-local.yml, application-dev.yml, application-release.yml 처럼 `application-` 을 prefix 로 명명 규칙을 지켜서 yaml 파일을 생성하면, 시작 시 spring.profiles.active=local,dev 처럼 profiles 를 쉽게 지정할 수 있다. 
+
+그럼 spring boot starter 에서 지원하는 클래스는 @Profile 을 
+
+####   DataSource 를 설정하는 예시
 
 ```java
 @Configuration
@@ -78,6 +135,7 @@ public class DataSourceAutoConfiguration {
 }
 ```
 
-#### @ConditionalOnClass, @ConditionalOnProperty, @ConditionalOnMissingBean 등...
+#### 그 외 @ConditionalOnClass, @ConditionalOnProperty, @ConditionalOnMissingBean 등...
 
-위 어노테이션은 @Conditional 을 포함하여 각각의 해당 조건이 일치하는 경우에만 ApplicationContext 에 Bean 으로 등록된다.
+위 어노테이션들도 @Conditional 을 포함하여 각각의 해당 조건이 일치하는 경우에만 ApplicationContext 에 Bean 으로 등록된다.
+
