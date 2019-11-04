@@ -112,7 +112,7 @@ public class StudyAutoConfiguration {
 
 #### 4. Spring boot 가 자동으로 설정 정보를 가져오는 방법
 
-application.yml, application-local.yml, application-dev.yml, application-release.yml 처럼 `application-` 을 prefix 로 명명 규칙을 지켜서 yaml 파일을 생성하면, 시작 시 spring.profiles.active=local,dev 처럼 profiles 를 쉽게 지정할 수 있다. 
+application.yml, application-local.yml, application-dev.yml, application-release.yml 처럼 `application-` 을 prefix 로 명명 규칙을 지켜서 yaml 파일을 생성하고, 시작 시 spring.profiles.active=local,dev 처럼 profiles 를 지정하면 해당 yaml 파일들의 설정 정보로 bean 들을 생성한다.
 
 그럼 spring boot starter 에서 지원하는 클래스는 @Profile 을 
 
@@ -138,4 +138,3 @@ public class DataSourceAutoConfiguration {
 #### 그 외 @ConditionalOnClass, @ConditionalOnProperty, @ConditionalOnMissingBean 등...
 
 위 어노테이션들도 @Conditional 을 포함하여 각각의 해당 조건이 일치하는 경우에만 ApplicationContext 에 Bean 으로 등록된다.
-
