@@ -148,7 +148,7 @@ public class EnableAutoConfigurationImportSelector implements DeferredImportSele
 
  예를 들어 spring-boot-actuator 라이브러리를 디펜던시에 추가하면 `spring-boot-actuator` 와 `spring-boot-actuator-autoconfigure` 두개의 디펜던시가 추가된다. META-INF 폴더 아래 `spring.factories` 와 `spring-autoconfigure-metadata.properties` 가 중요하다.
 
-![image](https://github.com/choe061/choe061.github.io/blob/master/assets/images/study/autoconfiguration.png)
+![image](https://raw.githubusercontent.com/choe061/choe061.github.io/master/assets/images/study/autoconfiguration.png)
 
 * spring.factories
 
@@ -172,7 +172,7 @@ public class EnableAutoConfigurationImportSelector implements DeferredImportSele
 
 * @ConditionalOnWebApplication : 현재 웹 애플리케이션인 경우만 bean 을 생성
 * @AutoConfigureAfter(EndpointAutoConfiguration.class) : 
-* @EnableConfigurationProperties(WebEndpointProperties.class) : WebEndpointProperties 의 management.endpoints.web 을 key 로 하는 설정 값들을 가져온다.
+* @EnableConfigurationProperties(WebEndpointProperties.class) : WebEndpointProperties 클래스를 통해 설정 파일의 management.endpoints.web 을 key 로 하는 설정 값들을 가져온다.
 
 ```java
 @Configuration
