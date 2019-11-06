@@ -148,7 +148,7 @@ public class EnableAutoConfigurationImportSelector implements DeferredImportSele
 
  예를 들어 spring-boot-actuator 라이브러리를 디펜던시에 추가하면 `spring-boot-actuator` 와 `spring-boot-actuator-autoconfigure` 두개의 디펜던시가 추가된다. META-INF 폴더 아래 `spring.factories` 와 `spring-autoconfigure-metadata.properties` 가 중요하다.
 
-![image-20191107003802210](/Users/choi/Library/Application Support/typora-user-images/image-20191107003802210.png)
+![image](https://github.com/choe061/choe061.github.io/blob/master/assets/images/study/autoconfiguration.png)
 
 * spring.factories
 
