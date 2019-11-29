@@ -23,7 +23,7 @@ AutoConfiguration 클래스는 @Configuration 으로 설정 클래스로 만들�
 ```yaml
 company:
   name: 'bk'
-  value: 1_000_000
+  valuation: 1_000_000
 ```
 
 ```java
@@ -33,7 +33,7 @@ company:
 @ConfigurationProperties(prefix = "company")
 public class CompanyProperties {
     private final String name;
-    private final long value;
+    private final long valuation;
 }
 ```
 
@@ -46,7 +46,7 @@ public class StudyAutoConfiguration {
     private final CompanyProperties properties;
     @Bean
     public Company company() {
-        return new Company(properties.getName(), properties.getValue());
+        return new Company(properties.getName(), properties.getValuation());
     }
 }
 ```
