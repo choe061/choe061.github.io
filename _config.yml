@@ -109,9 +109,9 @@ analytics:
 author:
   name             : "bk"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am ..."
+  bio              : # "I am bk"
   location         : "Seoul"
-  email            :
+  email            : "qjarbs111@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
