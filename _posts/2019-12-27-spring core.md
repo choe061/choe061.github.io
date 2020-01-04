@@ -1,7 +1,7 @@
 ---
 title: "스프링 코어 (IoC/DI)"
-permalink: /spring/core
-categories: IoC DI POJO AOP
+permalink: /spring/core/ioc-di
+categories: IoC DI POJO
 ---
 
 ## spring core (IoC / DI)
@@ -88,9 +88,19 @@ bean factory 는 스프링에서 제공하는 기본 구현체이고, 빈 팩토
 
 #### Component, Repository, Service, Controller
 
-@Component 를 사용해 bean 을 정의할 수 있다. 하지만 @Component 를 사용하여 DAO 클래스, Service 클래스, Controller 클래스를 작성하지 않는 이유는 ?
+@Component 를 사용해 bean 을 정의할 수 있다. 하지만 @Component 를 사용하여 DAO 클래스, Service 클래스, Controller 클래스를 작성하지 않는 이유는 
 
 우선, **클래스의 용도를 구체적으로 명시**하기 위한 것도 있다. **그런데, Repository 의 경우 `@Repository` 를 붙인 클래스는 발생한 예외를 DataAccessException 으로 감싸 던지므로?! 디버깅에 좋다.**
+
+###### Repository 와 DataAccessException
+
+직접 실행해보니 @Repository 주석만 달렸다고 하여 스프링에서 DataAccessException 으로 던지는 것이 아니라, JDBC, JPA 와 관련된 것 같다. JDBC 의 경우 JdbcTemplate 에서 발생하는 모든 SQLException 을 <u>RuntimeException 인 DataAccessException 으로 포장하여 던진다.</u> JPA 또한 발생된 예외를 DataAccessException 으로 변환하여 던진다고 한다.
+
+이러한 설계 방침은 Spring 의 exception translation 메커니즘을 따르는 것이라고 한다.
+
+* 관련 링크
+  * https://stackoverflow.com/questions/23325413/spring-crudrepository-exceptions
+  * https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Repository.html
 
 #### DI(Dependency Injection)
 
