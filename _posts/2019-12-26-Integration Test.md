@@ -35,7 +35,9 @@ docker(또는 docker-compose) 를 사용하여 테스트에 필요한 인스턴�
 
 ###### testcontainers
 
-`testcontainers` 라는 라이브러리를 사용하면, docker 를 띄우는 것과 동일하게 만들 수 있다. testcontainer 로 컨테이너화된 DB 인스턴스를 띄울 수 있고, 그 인스턴스를 사용하여 통합 테스트를 할 수 있다. (java, node 등 다양한 언어 지원, https://github.com/testcontainers)
+`testcontainers` 라는 라이브러리를 사용하면, docker 를 띄우는 것과 동일하게 만들 수 있다. (정확히는 내부적으로 실제 docker 인스턴스를 띄우기 때문에 docker 를 띄우고 내리는 과정을 자동화해주는 것이다. 그래서 test 를 돌리는 환경에서 docker 도 설치되어 있어야 한다.) testcontainer 로 컨테이너화된 DB 인스턴스를 띄울 수 있고, 그 인스턴스를 사용하여 통합 테스트를 할 수 있다. (java, node 등 다양한 언어 지원, https://github.com/testcontainers)
+
+만약 testcontainers 가 없다면, docker up → run test code → docker kill 과 같은 과정을 직접 해야할 것 이다.
 
 ###### ex) Database 통합 테스트
 
