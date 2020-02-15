@@ -74,15 +74,15 @@ execution 의 pool 설정 값은 ThreadPoolExecutor 클래스를 참고하면된
 * pool.max-size : pool 에 생성되는 최대 스레드 수
   * default `Integer.MAX_VALUE`
 
-#### Error Handling
+## Error Handling
 
 Async Method 를 사용하는 경우 에러 핸들링이 중요할 수 있다. 리턴 타입이 CompletableFuture(or Future) 인 경우는 결과에 대한 핸들링이 가능하지만, **리턴 타입이 void 인 경우** 별도의 처리 없이는 예외가 async 메서드를 호출한 thread 에 전달되지 않는다. 결국 exception 을 handling 하기 위한 async exception handler 를 구현해야 한다. SimpleAsyncUncaughtExceptionHandler 디폴트 구현체가 있어서 아무런 구현이 없어도 error level 의 로그가 남기는 한다.
 
-###### AsyncUncaughtExceptionHandler
+#### AsyncUncaughtExceptionHandler
 
 AsyncUncaughtExceptionHandler interface 를 상속/구현하면된다. handleUncaughtException() 메서드가 있는데, async exception 이 발생하면 이 메서드가 실행된다. 
 
-###### SimpleAsyncUncaughtExceptionHandler
+#### SimpleAsyncUncaughtExceptionHandler
 
 Spring 4.1 부터 나온 위 인터페이스 AsyncUncaughtExceptionHandler 의 default 구현체이다. 하지만 운영 서버에서 예외 발생 시 어떠한 처리를 하기 위해선 자세한 로깅을 남기는 방식으로 직접 구현하는 것도 좋을 것 같다.
 
@@ -90,7 +90,7 @@ Spring 4.1 부터 나온 위 인터페이스 AsyncUncaughtExceptionHandler 의 d
 
 ![simple-exception-handler-long](https://raw.githubusercontent.com/choe061/spring-example/master/async-example/src/main/resources/simpleAsyncUncaughtExceptionHandler-log.png)
 
-###### AsyncConfigurer
+#### AsyncConfigurer
 
 Configuration 클래스에 AsyncConfigurer interface 를 상속 구현 받은 후 위에서 구현한 구현체(or 디폴트 구현체) 를 넣어준다.
 
@@ -136,7 +136,7 @@ AsyncUncaughtExceptionHandler 를 직접 구현했을때의 로그.
 
 * 참고 : [spring-async baeldung](https://www.baeldung.com/spring-async#exception-handling)
 
-#### with Transaction
+## with Transaction
 
 @Async 메소드는 다른 Thread 에서 실행되기 때문에 같은 Transaction 에 묶이지 않는다. 개발시 Thread 분리로 인한 이슈를 고려해야 한다.
 
