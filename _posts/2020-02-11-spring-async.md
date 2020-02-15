@@ -62,7 +62,7 @@ spring:
 
 노란색은 요청으로 인해 톰캣의 Thread Pool 에서 가져온 쓰레드이다. 아래 빨간색 박스의 로그는 Async 메소드에서 찍은 로그이다. asyncThreadTaskExecutor Bean 에서 정의한 Prefix 가 붙어있다.
 
-![log](https://raw.githubusercontent.com/choe061/spring-example/master/async-example/src/main/resources/threads-log.png)
+![async-log](https://raw.githubusercontent.com/choe061/spring-example/master/async-example/src/main/resources/threads-log.png)
 
 ###### pool 관련 속성
 
@@ -74,10 +74,71 @@ execution 의 pool 설정 값은 ThreadPoolExecutor 클래스를 참고하면된
 * pool.max-size : pool 에 생성되는 최대 스레드 수
   * default `Integer.MAX_VALUE`
 
+#### Error Handling
+
+Async Method 를 사용하는 경우 에러 핸들링이 중요할 수 있다. 리턴 타입이 CompletableFuture(or Future) 인 경우는 결과에 대한 핸들링이 가능하지만, **리턴 타입이 void 인 경우** 별도의 처리 없이는 예외가 async 메서드를 호출한 thread 에 전달되지 않는다. 결국 exception 을 handling 하기 위한 async exception handler 를 구현해야 한다. SimpleAsyncUncaughtExceptionHandler 디폴트 구현체가 있어서 아무런 구현이 없어도 error level 의 로그가 남기는 한다.
+
+###### AsyncUncaughtExceptionHandler
+
+AsyncUncaughtExceptionHandler interface 를 상속/구현하면된다. handleUncaughtException() 메서드가 있는데, async exception 이 발생하면 이 메서드가 실행된다. 
+
+###### SimpleAsyncUncaughtExceptionHandler
+
+Spring 4.1 부터 나온 위 인터페이스 AsyncUncaughtExceptionHandler 의 default 구현체이다. 하지만 운영 서버에서 예외 발생 시 어떠한 처리를 하기 위해선 자세한 로깅을 남기는 방식으로 직접 구현하는 것도 좋을 것 같다.
+
+아래는 예제에서 member number 가 5인 경우 throw exception 을 하는 코드를 작성하여 만든 에러이다. 기본적으로 SimpleAsyncUncaughtExceptionHandler 가 처리한다.
+
+![simple-exception-handler-long](https://raw.githubusercontent.com/choe061/spring-example/master/async-example/src/main/resources/simpleAsyncUncaughtExceptionHandler-log.png)
+
+###### AsyncConfigurer
+
+Configuration 클래스에 AsyncConfigurer interface 를 상속 구현 받은 후 위에서 구현한 구현체(or 디폴트 구현체) 를 넣어준다.
+
+###### 커스텀 ExceptionHandler 구현 방법
+
+1. implements AsyncConfigurer
+2. return type AsyncUnCaughtExceptionHandler, getAsyncUncaughtExceptionHandler() 메서드 오버라이드
+3. SimpleAsyncUncaughtExceptionHandler 또는 AsyncUncaughtExceptionHandler 를 구현한 구현체를 넣어준다.
+
+```java
+@Slf4j
+public class AsyncEmailExceptionHandler implements AsyncUncaughtExceptionHandler {
+
+    @Override
+    public void handleUncaughtException(final Throwable ex, final Method method, final Object... params) {
+        log.error("async email exception message : {}, method : {}, params : {}", ex.getMessage(), method.getName(), params);
+    }
+}
+
+```
+
+```java
+@EnableAsync
+@Configuration
+public class AsyncThreadPoolConfiguration implements AsyncConfigurer {
+    @Bean
+    public Executor asyncKakaoEmailTaskExecutor() {
+        // ...
+    }
+    
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return new AsyncEmailExceptionHandler();
+    }
+}
+```
+
+###### 커스텀 구현 로그
+
+AsyncUncaughtExceptionHandler 를 직접 구현했을때의 로그.
+
+![custom-exception-handler](https://raw.githubusercontent.com/choe061/spring-example/master/async-example/src/main/resources/customAsyncUncaughtExceptionHandler-log.png)
+
+* 참고 : [spring-async baeldung](https://www.baeldung.com/spring-async#exception-handling)
+
 #### with Transaction
 
 @Async 메소드는 다른 Thread 에서 실행되기 때문에 같은 Transaction 에 묶이지 않는다. 개발시 Thread 분리로 인한 이슈를 고려해야 한다.
 
-#### example
+#### [spring async-example project](https://github.com/choe061/spring-example/tree/master/async-example)
 
-* https://github.com/choe061/spring-example/tree/master/async-example
