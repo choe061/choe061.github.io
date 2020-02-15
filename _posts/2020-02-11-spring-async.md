@@ -8,6 +8,10 @@ categories: async
 
 public method 에 @Async 를 붙여 비동기 동작을 유발시킬 수 있다. 접근제한자는 반드시 public 이어야 하며 같은 클래스 내에서 @Async method 호출은 비동기로 동작하지 않는다. 그 이유는 어노테이션 동작 방식이 AOP Proxy 기반이기 때문이다.
 
+#### [spring async-example project](https://github.com/choe061/spring-example/tree/master/async-example)
+
+아래 설명에 대한 예제 코드
+
 ## return type
 
 * void
@@ -141,6 +145,4 @@ AsyncUncaughtExceptionHandler 를 직접 구현했을때의 로그.
 ## with Transaction
 
 @Async 메소드는 다른 Thread 에서 실행되기 때문에 같은 Transaction 에 묶이지 않는다. 개발시 Thread 분리로 인한 이슈를 고려해야 한다.
-
-#### [spring async-example project](https://github.com/choe061/spring-example/tree/master/async-example)
 
