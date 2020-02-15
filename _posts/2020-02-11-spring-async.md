@@ -78,7 +78,7 @@ execution 의 pool 설정 값은 ThreadPoolExecutor 클래스를 참고하면된
 
 Async Method 를 사용하는 경우 에러 핸들링이 중요할 수 있다. 리턴 타입이 CompletableFuture(or Future) 인 경우는 결과에 대한 핸들링이 가능하지만, **리턴 타입이 void 인 경우** 별도의 처리 없이는 예외가 async 메서드를 호출한 thread 에 전달되지 않는다. 결국 exception 을 handling 하기 위한 async exception handler 를 구현해야 한다. 
 
-@EnableAsync 어노테이션을 따라가다보면, AsyncConfigurer 타입의 beans 을 수집한다고 나와있다. @Async 를 사용하기 위해서 기본적으로 @EnableAsync 어노테이션을 추가하기 때문에 에러 핸들링에도 디폴트 구현체 SimpleAsyncUncaughtExceptionHandler 가 사용되고 있다.
+@EnableAsync 어노테이션을 따라가다보면, AsyncConfigurer 타입의 beans 을 수집한다고 나와있다. @Async 를 사용하기 위해서 기본적으로 @EnableAsync 어노테이션을 추가하기 때문에 에러 핸들링을 위한 코드를 작성하지 않아도 디폴트 구현체 SimpleAsyncUncaughtExceptionHandler 가 사용되고 있다.
 
 #### AsyncUncaughtExceptionHandler
 
