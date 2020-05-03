@@ -78,6 +78,7 @@ google:
   instant_search         : # false (default), true
 # SEO Related
 google_site_verification :
+google_analytics         : 'UA-165420637-1'
 bing_site_verification   :
 yandex_site_verification :
 naver_site_verification  :
