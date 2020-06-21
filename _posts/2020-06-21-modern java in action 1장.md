@@ -37,11 +37,9 @@ categories: java ModernJavaInAction
 
 * default method 를 설명하기 전에, 기존 메서드 중 Collections.sort(list) 를 잠깐 설명한다. 자바 8이전에는 기능을 추가할때 하위 호환성을 지키기 위해 Collections 와 같은 유틸성 클래스에 기능을 추가하였고, 위 메소드처럼 Collections 에 sort 가 추가되었다. 그럼 stream 도 Collections 나 다른 유틸성 클래스로 만들면 되었을텐데, 왜 default method 를 만들고 list 에 추가했을까?
 
-  * 이유는 생각보다 간단한 것 같다. 메서드 시그니처를 보면 Collections.sort(list) 보다 list.sort() 가 더 적절하고 깔끔해보인다. 이것 처럼 stream 도 Collections.stream(list) 보다 list.stream() 이 더 좋아보인다.
+* 하지만 기존 List, Map 등 인터페이스의 하위 호환성을 지키며 인터페이스를 수정하는 것은 기존의 방법으로는 불가능했다. 그래서 Java 8 에서 기존 인터페이스를 수정하면서 하위 호환성을 지키기 위해 디폴트 메서드가 추가되었다.
 
-* 기존 List, Map 등 인터페이스를 하위 호환성을 지키며 수정하는 것은 기존의 방법으로는 불가능했다. 그래서 Java 8 에서 기존 인터페이스를 수정하면서 하위 호환성을 지키기 위해 디폴트 메서드가 추가되었다.
-
-  * 예를들어 **MemberUtils.move(member) 이런 형태보다 member.move() 가 훨씬 깔끔**해보이는 것과 같은 느낌이다. 그리고 **Member 를 다루는 메소드가 한 곳으로 모이면서 응집도도 올라간다.** 마찬가지로 Collections.stream(members) 는 어색하고 깔끔한 코드처럼 보이지 않는다. members.stream() 방식을 사용하기 위해 디폴트 메서드가 생겼다.
+  * 예를들어 메소드 시그니처를 보면 **MemberUtils.move(member) 이런 형태보다 member.move() 가 훨씬 깔끔**해보인다. 그리고 **Member 를 다루는 메소드가 한 곳으로 모이면서 응집도도 올라간다.** 마찬가지로 Collections.stream(members) 는 members.stream() 이 비해 어색하고 깔끔한 코드처럼 보이지 않는다. interface 에 새로운 기능을 추가하면서 members.stream() 방식을 사용하기 위해 default method 가 생긴 것이다.
 
   * 자바 8의 List 인터페이스부터는 sort 디폴트 메서드가 추가되었다.
 
