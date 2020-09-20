@@ -29,6 +29,14 @@ categories: spring spring-cloud-stream
 
   * .properties, .yml 에서 binder 의 이름을 local_rabbit 으로 사용하려면 spring.binders 에서 local_rabbit 으로 정의해야 한다.
 
+  * spring-cloud-starter-stream-rabbit 을 디펜던시로 추가하면 spring.binders 파일을 정의하지 않아도 디폴트로 `rabbit` 이름의 binder 를 사용할 수 있다.
+
+    * ```groovy
+      implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit'
+      ```
+
+    * spring-cloud-stream-binder-rabbit 모듈의 `META-INF/spring.binders` 파일에 `rabbit` 이 정의되어 있다.
+
 #### YAML Configuration
 
 ```yaml
@@ -73,12 +81,6 @@ spring:
 
     * spring.binders 파일에 정의한 binder 지정
 
-    * spring-cloud-starter-stream-rabbit 을 디펜던시로 추가하면 spring.binders 파일을 정의하지 않아도 디폴트로 `rabbit` 이름의 binder 를 사용할 수 있다.
-
-      * ```groovy
-        implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit'
-        ```
-
   * group
 
     * consumer property
@@ -94,8 +96,7 @@ spring:
       * [rabbit consumer properties](https://cloud.spring.io/spring-cloud-static/spring-cloud-stream-binder-rabbit/3.0.6.RELEASE/reference/html/spring-cloud-stream-binder-rabbit.html#_rabbitmq_consumer_properties)
 
   * [producer properties](https://cloud.spring.io/spring-cloud-static/spring-cloud-stream/3.0.6.RELEASE/reference/html/spring-cloud-stream.html#_producer_properties)
-
-    * consumer 와 마찬가지로 spring-cloud-stream 에서 공통으로 지원하는 properties 가 있고, [rabbit producer properties](https://cloud.spring.io/spring-cloud-static/spring-cloud-stream-binder-rabbit/3.0.6.RELEASE/reference/html/spring-cloud-stream-binder-rabbit.html#rabbit-prod-props) 가 있다.
+  * consumer 와 마찬가지로 spring-cloud-stream 에서 공통으로 지원하는 properties 가 있고, [rabbit producer properties](https://cloud.spring.io/spring-cloud-static/spring-cloud-stream-binder-rabbit/3.0.6.RELEASE/reference/html/spring-cloud-stream-binder-rabbit.html#rabbit-prod-props) 가 있다.
 
 #### 상용 환경에서 필요한 설정
 
