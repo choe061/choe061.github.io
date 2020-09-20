@@ -83,5 +83,5 @@ categories: spring spring-cloud-stream
 ## 참고
 
 * [Spring Cloud Stream Reference Documentation](https://cloud.spring.io/spring-cloud-static/spring-cloud-stream/3.0.6.RELEASE/reference/html/)
-* [Introduction to Spring Cloud Stream | Baeldung](https://www.baeldung.com/spring-cloud-stream)
+* [Introduction to Spring Cloud Stream - Baeldung](https://www.baeldung.com/spring-cloud-stream)
 
