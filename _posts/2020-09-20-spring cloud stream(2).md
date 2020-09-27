@@ -51,7 +51,7 @@ spring:
           binder: local_rabbit
           group: messageConsumers
           consumer:
-          	concurrency: 8
+            concurrency: 8
         message-out-0:
           destination: push
           binder: local_rabbit

@@ -30,18 +30,18 @@ categories: spring spring-cloud-stream
 
   ```YAML
   spring:
-  	cloud:
-  		stream:
-  			bindings:
-          		message-in-0:
-            			binder: rabbit
-            			destination: message
-            			group: messageConsumers
-  			rabbit:
-  				bindings:
-  					message-in-0:
-  						consumer:
-  							auto-bind-dlq: true
+    cloud:
+      stream:
+        bindings:
+          message-in-0:
+            binder: rabbit
+            destination: message
+            group: messageConsumers
+        rabbit:
+          bindings:
+            message-in-0:
+              consumer:
+                auto-bind-dlq: true
   ```
 
   * `auto-bind-dlq` 를 true 로 설정하면 `message.messageConsumers.dlq` 로 RabbitMQ queue 가 추가된다. DLQ 설정이 완료되면, 실패한 메시지는 기존 데이터와 함께 오류 메시지를 포함하여 DLQ 로 전송된다.
@@ -78,17 +78,17 @@ categories: spring spring-cloud-stream
 
   ```yaml
   spring:
-  	cloud:
-  		stream:
-  			bindings:
-  				message-in-0:
-  					consumer:
-  						max-attempts: 1
-  			rabbit:
-  				bindings:
-  					message-in-0:
-  						consumer:
-  							requeue-rejected: true
+    cloud:
+      stream:
+        bindings:
+          message-in-0:
+            consumer:
+              max-attempts: 1
+        rabbit:
+          bindings:
+            message-in-0:
+              consumer:
+                requeue-rejected: true
   ```
 
 #### Retry Template and retryBackoff
