@@ -71,9 +71,9 @@ spring:
 * function.definition
   * 정의한 function(binding) 을 나열
   * 두 가지 splitter
-    * ; 로 파이프라인 분리
-    * | 로 파이프라인 연결
-  * ex) definition: order|pay|message;stat
+    * `;` 로 파이프라인 분리
+    * `|` 로 파이프라인 연결
+  * ex) `definition: order|pay|message;stat`
     - order → pay → message 가 하나의 파이프라인
     - stat 이 하나의 파이프라인
 * bindings
