@@ -43,6 +43,8 @@ categories: spring spring-cloud-stream
 spring:
   cloud:
     stream:
+      function:
+      	definition: message
       bindings:
         message-in-0:
           destination: message
@@ -66,8 +68,15 @@ spring:
                 virtual-host: /
 ```
 
-* bindings 정의
-
+* function.definition
+  * 정의한 function(binding) 을 나열
+  * 두 가지 splitter
+    * ; 로 파이프라인 분리
+    * | 로 파이프라인 연결
+  * ex) definition: order|pay|message;stat
+    - order → pay → message 가 하나의 파이프라인
+    - stat 이 하나의 파이프라인
+* bindings
   * functional bindings naming conversions
 
     * consumer → `<function name>-in-<index number>`
