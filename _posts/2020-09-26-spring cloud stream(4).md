@@ -28,7 +28,7 @@ categories: spring spring-cloud-stream
 
 * RabbitMQ 에서 DLQ 사용 방법
 
-  ```YAML
+  ```yaml
   spring:
     cloud:
       stream:
@@ -128,7 +128,7 @@ categories: spring spring-cloud-stream
 ###### retryableExceptions
 
 * 특정 exception (and subclasses) 에 대한 retry 여부를 결정
-  * 비즈니스 로직에 따라 예상된 예외 발생 시 메시지 처리를 drop 하기 위한 exception 을 정의할 때 사용하면 좋을 것 같다.
+  * 비즈니스 로직에 따라 메시지 처리를 drop 하기 위한 exception 을 정의할 때 사용하면 좋을 것 같다.
 * map 으로 정의
   * key - Throwable class name
   * value - boolean
