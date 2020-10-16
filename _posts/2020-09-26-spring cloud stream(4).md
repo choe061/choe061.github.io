@@ -70,9 +70,9 @@ categories: spring spring-cloud-stream
 
 - 레빗이나 카프카 등.. 메시지 재처리를 위해 내부적으로 RetryTemplate 을 이용한다.
 
-- 디폴트 설정을 사용하면 최대 3 번 requeue 한다. max-attempts 를 넘은 메시지는 Drop.
+- 디폴트 설정을 사용하면 최대 3 번 requeue 한다. `max-attempts` 를 넘은 메시지는 Drop.
 
-- max-attempt property 를 1 로 설정하면, 내부적인 재처리 로직은 disable 된다. 1이 아닌 수를 넣게되면 최대 n 번 만큼 재처리하는 loop 를 돌게 된다.
+- `max-attempt` property 를 1 로 설정하면, 내부적인 재처리 로직은 disable 되면서 `requeue-rejected` property 도 true 로 된다. 1이 아닌 수를 넣게되면 최대 n 번 만큼 재처리하는 loop 를 돌게 된다.
 
   - 두 가지 properties
 
@@ -90,6 +90,8 @@ categories: spring spring-cloud-stream
               consumer:
                 requeue-rejected: true
   ```
+
+---
 
 #### Retry Template and retryBackoff
 
@@ -115,7 +117,7 @@ categories: spring spring-cloud-stream
 
 ###### backOffMultiplier
 
-* The backoff multiplier ?
+* 재시도 마다 interval * multiplier 만큼 재시도 시간 간격이 증가
 * Default : 2.0
 
 ###### defaultRetryable
@@ -125,10 +127,11 @@ categories: spring spring-cloud-stream
 
 ###### retryableExceptions
 
+* 특정 exception (and subclasses) 에 대한 retry 여부를 결정
+  * 비즈니스 로직에 따라 예상된 예외 발생 시 메시지 처리를 drop 하기 위한 exception 을 정의할 때 사용하면 좋을 것 같다.
 * map 으로 정의
   * key - Throwable class name
   * value - boolean
-* 특정 exception (and subclasses) 에 대한 retry 여부를 결정
 * `spring.cloud.stream.bindings.input.consumer.retryable-exceptions.java.lang.IllegalStateException=false`
 * Default : empty
 
