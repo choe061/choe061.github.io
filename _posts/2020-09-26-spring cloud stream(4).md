@@ -1,10 +1,10 @@
 ---
-title: "Spring Cloud Stream Error Handling"
+title: "Spring Cloud Stream Error Handling, Retry, DLQ"
 permalink: /spring/spring-cloud-stream/4
 categories: spring spring-cloud-stream
 ---
 
-# spring-cloud-stream(4) Error Handling (with RabbitMQ)
+# spring-cloud-stream(4) Error Handling, Retry, DLQ (with RabbitMQ)
 
 ## Error Handling
 
@@ -109,6 +109,7 @@ categories: spring spring-cloud-stream
 
 * retry 간격
 * Default : 1000ms
+  * 너무 짧은 간격으로 재시도하는 것도 상황에 따라서 좋지 않을 수 있을 것 같다. 예를들어 디비나 내부 호출하는 서버간 네트워크 지연으로 메시지 처리가 실패하였다면, 트래픽이 너무 몰리지 않도록 backOffIntiailInterval 을 통해 어느정도 처리를 지연시키는 것도 좋을 것 같다.
 
 ###### backOffMaxInterval
 
